@@ -10,6 +10,7 @@ const puerto = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/team-crests", express.static("./src/data/crests/"));
 
 const data = fs.readFileSync("src/data/teams.json");
 const listedTeams = JSON.parse(data);
@@ -78,6 +79,20 @@ app.delete("/:team/delete", (req, res) => {
     console.log(e);
     3;
   }
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./src/data/crests/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.params.team + "-crest.jpg");
+  },
+});
+const upload = multer({ storage: storage });
+// const upload = multer({ dest: "./src/data/crests/" });
+app.post("/:team/upload-crest", upload.single("crest"), function (req, res) {
+  res.send("hi");
 });
 
 app.listen(puerto);
