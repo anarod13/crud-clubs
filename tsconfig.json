@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es6",
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "types": ["jest", "@types/jest"]
   }
 }
