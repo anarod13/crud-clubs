@@ -14,5 +14,5 @@ export default interface ITeam {
   founded: number | null;
   clubColors: string;
   venue: string;
-  lastUpdated: Date;
+  lastUpdated: string;
 }
