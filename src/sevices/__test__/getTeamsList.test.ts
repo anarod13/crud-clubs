@@ -20,5 +20,7 @@ beforeAll(() => {
 
 it("Gets a teams list", () => {
   const teamsList = getTeamsList();
+  expect(fs.readFileSync).toHaveBeenCalledTimes(1);
+  expect(fs.readFileSync).toHaveBeenCalledWith("src/data/teams.json");
   expect(teamsList).toEqual(teamsListResult);
 });
