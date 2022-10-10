@@ -47,10 +47,7 @@ app.patch("/:team/edit", (req, res) => {
     const editedTeam = editTeam(teamId, newTeamData);
     res.send(editedTeam);
   } catch (e) {
-    console.log("hi.error");
-
     res.status(404).send("We couldn't find that team!");
-
     console.error(e);
   }
 });
