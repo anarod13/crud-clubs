@@ -11,7 +11,7 @@ export function getTeamsList(): ITeam[] {
     const listedTeam = teamListedMapper(team);
     listedTeams.push(listedTeam);
   });
-  return teams;
+  return listedTeams;
 }
 
 export function getTeam(teamId: number): ITeam {
@@ -23,27 +23,29 @@ export function getTeam(teamId: number): ITeam {
 
 export function editTeam(teamId: number, newTeamData: ITeam): ITeam {
   const listedTeams = getDataBase();
-  newTeamData.lastUpdated = new Date();
+  newTeamData.lastUpdated = new Date().toISOString();
   const teamIndex = findTeam(teamId, listedTeams);
   listedTeams[teamIndex] = newTeamData;
   updateDataBase(listedTeams);
-  return getDataBase()[teamIndex];
+  const updatedListedTeams = getDataBase();
+  return updatedListedTeams[teamIndex];
 }
 
 export function updateTeamCrest(teamId: number): ITeam {
   const listedTeams = getDataBase();
   const teamIndex = findTeam(teamId, listedTeams);
   listedTeams[teamIndex].crestUrl = `${CREST_STORAGE}/${teamId}-crest.jpg`;
-  listedTeams[teamIndex].lastUpdated = new Date();
+  listedTeams[teamIndex].lastUpdated = new Date().toISOString();
   updateDataBase(listedTeams);
-  return listedTeams[teamIndex];
+  const updatedListedTeams = getDataBase();
+  return updatedListedTeams[teamIndex];
 }
 
 export function createTeam(newTeam: ITeam): ITeam {
   const listedTeams = getDataBase();
   const newTeamId = listedTeams.length;
   newTeam.id = newTeamId;
-  newTeam.lastUpdated = new Date();
+  newTeam.lastUpdated = new Date().toISOString();
   listedTeams.push(newTeam);
   updateDataBase(listedTeams);
   const updatedListedTeams = getDataBase();
@@ -53,7 +55,6 @@ export function createTeam(newTeam: ITeam): ITeam {
 export function deleteTeam(teamId: number) {
   const listedTeams = getDataBase();
   const teamIndex = findTeam(teamId, listedTeams);
-  console.log(teamIndex);
   listedTeams.splice(teamIndex, 1);
   updateDataBase(listedTeams);
 }
