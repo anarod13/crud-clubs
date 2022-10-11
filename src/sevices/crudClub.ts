@@ -21,7 +21,7 @@ export function getTeam(teamId: number): ITeam {
   return teamData;
 }
 
-export function editTeam(teamId: number, newTeamData: ITeam): ITeam {
+export function updateTeam(teamId: number, newTeamData: ITeam): ITeam {
   const listedTeams = getDataBase();
   newTeamData.lastUpdated = new Date().toISOString();
   const teamIndex = findTeam(teamId, listedTeams);

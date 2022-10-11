@@ -3,10 +3,10 @@ import multer from "multer";
 import {
   getTeamsList,
   createTeam,
-  editTeam,
   getTeam,
   updateTeamCrest,
   deleteTeam,
+  updateTeam,
 } from "./src/sevices/crudClub";
 
 const app = express();
@@ -40,11 +40,11 @@ app.get("/:team", (req, res) => {
   }
 });
 
-app.patch("/:team/edit", (req, res) => {
+app.patch("/:team/update", (req, res) => {
   try {
     const teamId = Number(req.params.team);
     const newTeamData = req.body;
-    const editedTeam = editTeam(teamId, newTeamData);
+    const editedTeam = updateTeam(teamId, newTeamData);
     res.send(editedTeam);
   } catch (e) {
     res.status(404).send("We couldn't find that team!");

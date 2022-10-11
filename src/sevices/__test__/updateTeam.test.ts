@@ -1,7 +1,7 @@
 import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
 import mockTeamUpdatedData from "./fixtures/mockTeamData.json";
 import fs from "fs";
-import { editTeam } from "../crudClub";
+import { updateTeam } from "../crudClub";
 
 jest.mock("fs");
 const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
@@ -33,7 +33,7 @@ beforeAll(() => {
 });
 
 it("Edits team details", () => {
-  editTeam(teamData.id, teamData);
+  updateTeam(teamData.id, teamData);
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);
   expect(fs.readFileSync).toHaveBeenCalledWith("src/data/teams.json");
   expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
