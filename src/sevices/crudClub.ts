@@ -34,7 +34,7 @@ export function updateTeam(teamId: number, newTeamData: ITeam): ITeam {
 export function updateTeamCrest(teamId: number): ITeam {
   const listedTeams = getDataBase();
   const teamIndex = findTeam(teamId, listedTeams);
-  listedTeams[teamIndex].crestUrl = `${CREST_STORAGE}/${teamId}-crest.jpg`;
+  listedTeams[teamIndex].crestUrl = `${CREST_STORAGE}/${teamId}-crest.png`;
   listedTeams[teamIndex].lastUpdated = new Date().toISOString();
   updateDataBase(listedTeams);
   const updatedListedTeams = getDataBase();
