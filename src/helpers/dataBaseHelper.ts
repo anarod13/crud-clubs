@@ -12,3 +12,16 @@ export function getDataBase(): ITeam[] {
 export function updateDataBase(updateTeamList: ITeam[]) {
   fs.writeFileSync(DATA_SOURCE, JSON.stringify(updateTeamList));
 }
+
+export function checkIfFileExists(filePath: string) {
+  try {
+    fs.statSync(filePath);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+export function deleteFile(filePath: string) {
+  fs.unlinkSync(filePath);
+}
