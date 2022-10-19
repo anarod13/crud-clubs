@@ -85,8 +85,9 @@ const upload = multer({ storage: storage });
 
 app.post("/:team/upload-crest", upload.single("crest"), function (req, res) {
   const teamId = Number(req.params.team);
-  const newCrestUrl = updateTeamCrest(teamId);
-  res.send(newCrestUrl);
+  updateTeamCrest(teamId);
+  res.statusCode = 200;
+  res.end();
 });
 
 app.listen(puerto);
