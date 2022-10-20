@@ -3,6 +3,8 @@
     "target": "es6",
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "outDir": "build",
+    "rootDir": "./src",
     "moduleResolution": "node",
     "types": ["jest", "@types/jest"]
   }

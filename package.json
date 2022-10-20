@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev:threads": "nodemon threads.js",
-    "dev": "nodemon app.ts",
+    "dev": "nodemon src/app.ts",
     "dev:express": "nodemon ./express/index-${npm_config_paso}.js",
     "test": "jest src"
   },
