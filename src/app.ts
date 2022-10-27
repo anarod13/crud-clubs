@@ -86,16 +86,18 @@ const storage = multer.diskStorage({
     cb(null, "./src/data/crests/");
   },
   filename: function (req, file, cb) {
-    cb(null, req.params.team + "-crest.jpg");
+    const id = new Date().getTime();
+    cb(null, `crest-req.params.team-id.png`);
   },
 });
 const upload = multer({ storage: storage });
 
 app.post("/:team/upload-crest", upload.single("crest"), function (req, res) {
   const teamId = Number(req.params.team);
-  updateTeamCrest(teamId);
+  const crestFileName = (req as any).file.filename;
+  const updatedTeamCrest = updateTeamCrest(teamId, crestFileName);
   res.statusCode = 200;
-  res.end();
+  res.send(updatedTeamCrest);
 });
 
 app.listen(puerto);
