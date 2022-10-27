@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import multer from "multer";
 import {
   getTeamsList,
@@ -12,6 +13,13 @@ import {
 const app = express();
 const puerto = 8080;
 
+const options: cors.CorsOptions = {
+  origin: "*",
+  allowedHeaders: "*",
+  methods: "GET,PATCH,PUT,POST,DELETE",
+};
+
+app.use(cors(options));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/team-crests", express.static("./src/data/crests/"));
