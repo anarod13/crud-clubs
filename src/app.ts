@@ -33,10 +33,10 @@ app.get("/", (req, res) => {
     return;
   }
 });
-app.get("/:team", (req, res) => {
+app.get("/team/:team", (req, res) => {
   try {
-    const teamId = Number(req.params.team);
-    const teamData = getTeam(teamId);
+    const teamTla = req.params.team;
+    const teamData = getTeam(teamTla);
     if (teamData) {
       res.send(JSON.stringify(teamData));
     } else {
@@ -48,11 +48,11 @@ app.get("/:team", (req, res) => {
   }
 });
 
-app.patch("/:team/update", (req, res) => {
+app.patch("/team/:team/update", (req, res) => {
   try {
-    const teamId = Number(req.params.team);
+    const teamTla = req.params.team;
     const newTeamData = req.body;
-    const editedTeam = updateTeam(teamId, newTeamData);
+    const editedTeam = updateTeam(teamTla, newTeamData);
     res.send(editedTeam);
   } catch (e) {
     res.status(404).send("We couldn't find that team!");
@@ -70,10 +70,10 @@ app.put("/add", (req, res) => {
   }
 });
 
-app.delete("/:team/delete", (req, res) => {
+app.delete("/team/:team/delete", (req, res) => {
   try {
-    const teamId = Number(req.params.team);
-    deleteTeam(teamId);
+    const teamTla = req.params.team;
+    deleteTeam(teamTla);
     res.statusCode = 200;
     res.end();
   } catch (e) {
@@ -92,12 +92,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.post("/:team/upload-crest", upload.single("crest"), function (req, res) {
-  const teamId = Number(req.params.team);
-  const crestFileName = (req as any).file.filename;
-  const updatedTeamCrest = updateTeamCrest(teamId, crestFileName);
-  res.statusCode = 200;
-  res.send(updatedTeamCrest);
-});
+app.post(
+  "/team/:team/upload-crest",
+  upload.single("crest"),
+  function (req, res) {
+    const teamTla = req.params.team;
+    const crestFileName = (req as any).file.filename;
+    const updatedTeamCrest = updateTeamCrest(teamTla, crestFileName);
+    res.statusCode = 200;
+    res.send(updatedTeamCrest);
+  }
+);
 
 app.listen(puerto);
