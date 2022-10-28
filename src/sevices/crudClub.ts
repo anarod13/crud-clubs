@@ -5,9 +5,11 @@ import {
   updateTeamData,
   deleteTeamData,
   deleteTeamCrest,
+  createNewTeam,
 } from "../helpers/dataBaseHelper";
-import ITeam from "../entities/IListedTeam";
+import ITeam from "../entities/ITeam";
 import IListedTeam from "../entities/IListedTeam";
+import mapListedTeam from "../mappers/__tests__/fixtures/teamListedMapper";
 
 const CREST_STORAGE = "team-crests";
 
@@ -15,57 +17,62 @@ export function getTeamsList(): IListedTeam[] {
   return getListedTeams();
 }
 
-export function getTeam(teamId: number): ITeam {
-  const teams = getDataBase();
-  const teamIndex = findTeam(teamId, teams);
-  const teamData = teams[teamIndex];
+export function getTeam(teamTla: string): ITeam {
+  return getTeamData(teamTla);
+}
+
+export function updateTeam(teamTla: string, newTeamData: ITeam) {
+  newTeamData.lastUpdated = new Date().toISOString();
+  updateTeamData(teamTla, newTeamData);
+  updateTeamInList(mapListedTeam(newTeamData));
+  return getTeamData(teamTla);
+}
+
+export function updateTeamCrest(teamTla: string, crestFileName: string) {
+  const teamData = getTeamData(teamTla);
+  teamData.crestUrl = crestFileName;
+  teamData.lastUpdated = new Date().toISOString();
+  updateTeamData(teamTla, teamData);
+  updateTeamInList(mapListedTeam(teamData));
   return teamData;
 }
 
-export function updateTeam(teamId: number, newTeamData: ITeam): ITeam {
-  const listedTeams = getDataBase();
-  newTeamData.lastUpdated = new Date().toISOString();
-  const teamIndex = findTeam(teamId, listedTeams);
-  listedTeams[teamIndex] = newTeamData;
-  updateDataBase(listedTeams);
-  const updatedListedTeams = getDataBase();
-  return updatedListedTeams[teamIndex];
-}
-
-export function updateTeamCrest(teamId: number, crestFileName: string) {
-  const listedTeams = getDataBase();
-  const teamIndex = findTeam(teamId, listedTeams);
-  listedTeams[teamIndex].crestUrl = `${CREST_STORAGE}/${crestFileName}`;
-  listedTeams[teamIndex].lastUpdated = new Date().toISOString();
-  updateDataBase(listedTeams);
-  return listedTeams[teamIndex].crestUrl;
-}
-
 export function createTeam(newTeam: ITeam): ITeam {
-  const listedTeams = getDataBase();
-  const newTeamId = listedTeams.length;
-  newTeam.id = newTeamId;
+  newTeam.id = getListedTeams().length;
   newTeam.lastUpdated = new Date().toISOString();
-  listedTeams.push(newTeam);
-  updateDataBase(listedTeams);
-  const updatedListedTeams = getDataBase();
-  return updatedListedTeams[newTeamId];
+  createNewTeam(newTeam.tla, newTeam);
+  addTeamToList(mapListedTeam(newTeam));
+  return getTeamData(newTeam.tla);
 }
 
-export function deleteTeam(teamId: number) {
-  const listedTeams = getDataBase();
-  const teamIndex = findTeam(teamId, listedTeams);
-  const crestFilePath = getCrestFilePath(listedTeams[teamIndex].crestUrl);
-  if (checkIfFileExists(crestFilePath)) deleteFile(crestFilePath);
+export function deleteTeam(teamTla: string) {
+  const teamCrestUrl = getTeamData(teamTla).crestUrl;
+  deleteTeamData(teamTla);
+  deleteTeamCrest(teamCrestUrl);
+  deleteTeamInList(teamTla);
+}
+
+function addTeamToList(team: IListedTeam) {
+  const listedTeams = getListedTeams();
+  listedTeams.push(team);
+  updateListedTeams(listedTeams);
+}
+
+function updateTeamInList(team: IListedTeam) {
+  const listedTeams = getListedTeams();
+  const teamIndex = findTeam(team.tla, listedTeams);
+  listedTeams[teamIndex] = team;
+  updateListedTeams(listedTeams);
+}
+
+function deleteTeamInList(teamTla: string) {
+  const listedTeams = getListedTeams();
+  const teamIndex = findTeam(teamTla, listedTeams);
   listedTeams.splice(teamIndex, 1);
-  updateDataBase(listedTeams);
+  updateListedTeams(listedTeams);
 }
 
-function findTeam(teamId: number, listedTeams: ITeam[]): number {
-  const teamIndex = listedTeams.findIndex((team) => team.id === teamId);
+function findTeam(teamTla: string, listedTeams: IListedTeam[]): number {
+  const teamIndex = listedTeams.findIndex((team) => team.tla === teamTla);
   return teamIndex;
-}
-
-function getCrestFilePath(crestUrl: string): string {
-  return crestUrl.replace("team-crests", "src/data/crests");
 }
