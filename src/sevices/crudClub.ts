@@ -1,22 +1,18 @@
-import { teamListedMapper } from "../mappers/teamMapper";
 import {
-  checkIfFileExists,
-  deleteFile,
-  getDataBase,
-  updateDataBase,
+  getListedTeams,
+  updateListedTeams,
+  getTeamData,
+  updateTeamData,
+  deleteTeamData,
+  deleteTeamCrest,
 } from "../helpers/dataBaseHelper";
-import ITeam from "../data/ITeam";
+import ITeam from "../entities/IListedTeam";
+import IListedTeam from "../entities/IListedTeam";
 
 const CREST_STORAGE = "team-crests";
 
-export function getTeamsList(): ITeam[] {
-  const teams = getDataBase();
-  const listedTeams = [];
-  teams.forEach((team) => {
-    const listedTeam = teamListedMapper(team);
-    listedTeams.push(listedTeam);
-  });
-  return listedTeams;
+export function getTeamsList(): IListedTeam[] {
+  return getListedTeams();
 }
 
 export function getTeam(teamId: number): ITeam {
