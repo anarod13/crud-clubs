@@ -87,7 +87,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const id = new Date().getTime();
-    cb(null, `crest-req.params.team-id.png`);
+    cb(null, `crest-${req.params.team}-${id}.png`);
   },
 });
 const upload = multer({ storage: storage });
