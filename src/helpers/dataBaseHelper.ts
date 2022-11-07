@@ -30,8 +30,8 @@ export function deleteTeamData(teamTLA: string) {
   const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTLA}.json`;
   deleteFile(teamFilePath);
 }
-export function deleteTeamCrest(teamCrestPath: string) {
-  teamCrestPath.replace("team-crests/", TEAMS_CRESTS_PATH);
+export function deleteTeamCrest(teamCrestUrl: string) {
+  const teamCrestPath = teamCrestUrl.replace("team-crests/", TEAMS_CRESTS_PATH);
   deleteFile(teamCrestPath);
 }
 
