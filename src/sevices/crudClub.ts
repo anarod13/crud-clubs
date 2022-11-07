@@ -30,11 +30,12 @@ export function updateTeam(teamTla: string, newTeamData: ITeam) {
 
 export function updateTeamCrest(teamTla: string, crestFileName: string) {
   const teamData = getTeamData(teamTla);
-  teamData.crestUrl = crestFileName;
+  deleteTeamCrest(teamData.crestUrl);
+  teamData.crestUrl = `${CREST_STORAGE}/${crestFileName}`;
   teamData.lastUpdated = new Date().toISOString();
   updateTeamData(teamTla, teamData);
   updateTeamInList(mapListedTeam(teamData));
-  return teamData;
+  return teamData.crestUrl;
 }
 
 export function createTeam(newTeam: ITeam): ITeam {
