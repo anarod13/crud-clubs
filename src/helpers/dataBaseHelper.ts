@@ -36,7 +36,7 @@ export function deleteTeamCrest(teamCrestUrl: string) {
 }
 
 export function createNewTeam(teamTla: string, teamData: ITeam) {
-  const newTeamPath = `${TEAMS_DETAILS_PATH}${teamTla}`;
+  const newTeamPath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
   fs.writeFileSync(newTeamPath, JSON.stringify(teamData));
 }
 

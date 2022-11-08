@@ -60,7 +60,7 @@ app.patch("/team/:team/update", (req, res) => {
   }
 });
 
-app.put("/add", (req, res) => {
+app.post("/add", (req, res) => {
   try {
     const newTeamData = req.body;
     const newTeam = createTeam(newTeamData);
