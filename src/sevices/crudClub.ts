@@ -6,6 +6,7 @@ import {
   deleteTeamData,
   deleteTeamCrest,
   createNewTeam,
+  checkIfTeamFileExist,
 } from "../helpers/dataBaseHelper";
 import ITeam from "../entities/ITeam";
 import IListedTeam from "../entities/IListedTeam";
@@ -19,6 +20,15 @@ export function getTeamsList(): IListedTeam[] {
 
 export function getTeam(teamTla: string): ITeam {
   return getTeamData(teamTla);
+}
+
+export function checkIfTeamExist(teamTla: string): boolean {
+  const listedTeams = getListedTeams();
+  if (listedTeams.every((listedTeam) => listedTeam.tla != teamTla)) {
+    return false;
+  } else {
+    return checkIfTeamFileExist(teamTla);
+  }
 }
 
 export function updateTeam(teamTla: string, newTeamData: ITeam) {
@@ -48,8 +58,8 @@ export function createTeam(newTeam: ITeam): ITeam {
 
 export function deleteTeam(teamTla: string) {
   const teamCrestUrl = getTeamData(teamTla).crestUrl;
+  if (teamCrestUrl) deleteTeamCrest(teamCrestUrl);
   deleteTeamData(teamTla);
-  deleteTeamCrest(teamCrestUrl);
   deleteTeamInList(teamTla);
 }
 

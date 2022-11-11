@@ -16,8 +16,8 @@ export function updateListedTeams(updatedListedTeams: IListedTeam[]) {
   fs.writeFileSync(LISTED_TEAMS_PATH, JSON.stringify(updatedListedTeams));
 }
 
-export function getTeamData(teamTLA: string): ITeam {
-  const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTLA}.json`;
+export function getTeamData(teamTla: string): ITeam {
+  const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
   const teamData = fs.readFileSync(teamFilePath);
   return JSON.parse(teamData.toString());
 }
@@ -40,11 +40,20 @@ export function createNewTeam(teamTla: string, teamData: ITeam) {
   fs.writeFileSync(newTeamPath, JSON.stringify(teamData));
 }
 
+export function checkIfTeamFileExist(teamTla: string): boolean {
+  const filePath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
+  try {
+    return fs.statSync(filePath).isFile();
+  } catch (e) {
+    return false;
+  }
+}
+
 function deleteFile(filePath: string) {
   try {
     fs.statSync(filePath);
   } catch (e) {
-    return false;
+    return;
   }
   fs.unlinkSync(filePath);
 }
