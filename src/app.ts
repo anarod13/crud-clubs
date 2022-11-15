@@ -8,7 +8,7 @@ import {
   updateTeamCrest,
   deleteTeam,
   updateTeam,
-} from "./sevices/crudClub";
+} from "./services/crudClub";
 
 const app = express();
 const puerto = 8080;
