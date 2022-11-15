@@ -24,60 +24,53 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/team-crests", express.static("./src/data/crests/"));
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   try {
     const listedTeams = getTeamsList();
     res.send(JSON.stringify(listedTeams));
   } catch (err) {
-    console.error(err);
-    return;
+    next(err);
   }
 });
-app.get("/team/:team", (req, res) => {
+app.get("/team/:team", (req, res, next) => {
+  const teamTla = req.params.team;
   try {
-    const teamTla = req.params.team;
     const teamData = getTeam(teamTla);
-    if (teamData) {
-      res.send(JSON.stringify(teamData));
-    } else {
-      res.status(404).send("We couldn't find that team!");
-    }
+    res.send(JSON.stringify(teamData));
   } catch (err) {
-    console.error(err);
-    res.status(500).send({ error: "something blew up" });
+    next(err);
   }
 });
 
-app.patch("/team/:team/update", (req, res) => {
+app.patch("/team/:team/update", (req, res, next) => {
+  const teamTla = req.params.team;
+  const newTeamData = req.body;
   try {
-    const teamTla = req.params.team;
-    const newTeamData = req.body;
     const editedTeam = updateTeam(teamTla, newTeamData);
     res.send(editedTeam);
-  } catch (e) {
-    res.status(404).send("We couldn't find that team!");
-    console.error(e);
+  } catch (err) {
+    next(err);
   }
 });
 
-app.post("/add", (req, res) => {
+app.post("/add", (req, res, next) => {
   try {
     const newTeamData = req.body;
     const newTeam = createTeam(newTeamData);
     res.send(newTeam);
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    next(err);
   }
 });
 
-app.delete("/team/:team/delete", (req, res) => {
+app.delete("/team/:team/delete", (req, res, next) => {
   try {
     const teamTla = req.params.team;
     deleteTeam(teamTla);
     res.statusCode = 200;
     res.end();
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -103,5 +96,11 @@ app.post(
     res.send(updatedTeamCrest);
   }
 );
+
+app.use((error, req, res, next) => {
+  if (error.name == "ReferenceError") res.status(404).send(error.message);
+  else if (error.name == "SyntaxError") res.status(400).send(error.message);
+  else res.status(500).send("Something blew up, please try again");
+});
 
 app.listen(puerto);

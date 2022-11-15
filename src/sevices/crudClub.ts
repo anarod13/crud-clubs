@@ -5,7 +5,6 @@ import {
   updateTeamData,
   deleteTeamData,
   deleteTeamCrest,
-  createNewTeam,
   checkIfTeamFileExist,
 } from "../helpers/dataBaseHelper";
 import ITeam from "../entities/ITeam";
@@ -19,23 +18,20 @@ export function getTeamsList(): IListedTeam[] {
 }
 
 export function getTeam(teamTla: string): ITeam {
+  checkIfTeamExist(teamTla);
   return getTeamData(teamTla);
-}
-
-export function checkIfTeamExist(teamTla: string): boolean {
-  const listedTeams = getListedTeams();
-  if (listedTeams.every((listedTeam) => listedTeam.tla != teamTla)) {
-    return false;
-  } else {
-    return checkIfTeamFileExist(teamTla);
-  }
 }
 
 export function updateTeam(teamTla: string, newTeamData: ITeam) {
-  newTeamData.lastUpdated = new Date().toISOString();
-  updateTeamData(teamTla, newTeamData);
-  updateTeamInList(mapListedTeam(newTeamData));
-  return getTeamData(teamTla);
+  checkIfTeamExist(teamTla);
+  if (checkTeamData(newTeamData)) {
+    newTeamData.lastUpdated = new Date().toISOString();
+    updateTeamData(teamTla, newTeamData);
+    updateTeamInList(mapListedTeam(newTeamData));
+    return getTeamData(teamTla);
+  } else {
+    throw new SyntaxError("Wrong team data");
+  }
 }
 
 export function updateTeamCrest(teamTla: string, crestFileName: string) {
@@ -49,18 +45,32 @@ export function updateTeamCrest(teamTla: string, crestFileName: string) {
 }
 
 export function createTeam(newTeam: ITeam): ITeam {
-  newTeam.id = getListedTeams().length;
-  newTeam.lastUpdated = new Date().toISOString();
-  createNewTeam(newTeam.tla, newTeam);
-  addTeamToList(mapListedTeam(newTeam));
-  return getTeamData(newTeam.tla);
+  if (checkTeamData(newTeam)) {
+    newTeam.id = getListedTeams().length;
+    newTeam.lastUpdated = new Date().toISOString();
+    updateTeamData(newTeam.tla, newTeam);
+    addTeamToList(mapListedTeam(newTeam));
+    return getTeamData(newTeam.tla);
+  } else {
+    throw SyntaxError("Wrong team data");
+  }
 }
 
 export function deleteTeam(teamTla: string) {
+  checkIfTeamExist(teamTla);
   const teamCrestUrl = getTeamData(teamTla).crestUrl;
   if (teamCrestUrl) deleteTeamCrest(teamCrestUrl);
   deleteTeamData(teamTla);
   deleteTeamInList(teamTla);
+}
+
+function checkIfTeamExist(teamTla: string) {
+  const listedTeams = getListedTeams();
+  if (listedTeams.every((listedTeam) => listedTeam.tla != teamTla)) {
+    throw ReferenceError("Team not found");
+  } else {
+    checkIfTeamFileExist(teamTla);
+  }
 }
 
 function addTeamToList(team: IListedTeam) {
@@ -86,4 +96,36 @@ function deleteTeamInList(teamTla: string) {
 function findTeam(teamTla: string, listedTeams: IListedTeam[]): number {
   const teamIndex = listedTeams.findIndex((team) => team.tla === teamTla);
   return teamIndex;
+}
+
+function checkTeamData(data: any): data is ITeam {
+  return (
+    "name" in data &&
+    typeof data["name"] === "string" &&
+    "area" in data &&
+    "activeCompetitions" in data &&
+    "squad" in data &&
+    "shortName" in data &&
+    typeof data["shortName"] === ("string" || null) &&
+    "tla" in data &&
+    typeof data["tla"] === "string" &&
+    "crestUrl" in data &&
+    typeof data["crestUrl"] === ("string" || null) &&
+    "address" in data &&
+    typeof data["address"] === ("string" || null) &&
+    "phone" in data &&
+    typeof data["phone"] === ("string" || null) &&
+    "website" in data &&
+    typeof data["website"] === ("string" || null) &&
+    "email" in data &&
+    typeof data["email"] === ("string" || null) &&
+    "founded" in data &&
+    typeof data["founded"] === ("string" || null) &&
+    "clubColors" in data &&
+    typeof data["clubColors"] === ("string" || null) &&
+    "venue" in data &&
+    typeof data["venue"] === ("string" || null) &&
+    "lastUpdated" in data &&
+    typeof data["lastUpdated"] === ("string" || null)
+  );
 }
