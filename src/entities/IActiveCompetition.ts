@@ -1,7 +1,7 @@
 import type ITeamArea from "./ITeamArea";
 
 export default interface IActiveCompetition {
-  id: string;
+  id: number;
   area: ITeamArea;
   name: string;
   code: string;
