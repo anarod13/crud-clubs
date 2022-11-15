@@ -9,7 +9,7 @@ import {
 } from "../helpers/dataBaseHelper";
 import ITeam from "../entities/ITeam";
 import IListedTeam from "../entities/IListedTeam";
-import mapListedTeam from "../mappers/__tests__/fixtures/teamListedMapper";
+import mapListedTeam from "../mappers/teamListedMapper";
 
 const CREST_STORAGE = "team-crests";
 
