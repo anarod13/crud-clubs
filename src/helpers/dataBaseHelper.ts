@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import IListedTeam from "../entities/IListedTeam";
 import ITeam from "../entities/ITeam";
-import ITeamToUpdate from "../entities/ITeamToUpdate";
 
 const LISTED_TEAMS_PATH = "./src/data/teams.json";
 const TEAMS_DETAILS_PATH = "./src/data/teams/";
