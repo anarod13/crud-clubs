@@ -18,12 +18,10 @@ export function getTeamsList(): IListedTeam[] {
 }
 
 export function getTeam(teamTla: string): ITeam {
-  checkIfTeamExist(teamTla);
   return getTeamData(teamTla);
 }
 
-export function updateTeam(teamTla: string, newTeamData: ITeam) {
-  checkIfTeamExist(teamTla);
+export function updateTeam(teamTla: string, newTeamData: ITeam): ITeam {
   if (checkTeamData(newTeamData)) {
     newTeamData.lastUpdated = new Date().toISOString();
     updateTeamData(teamTla, newTeamData);
@@ -57,20 +55,10 @@ export function createTeam(newTeam: ITeam): ITeam {
 }
 
 export function deleteTeam(teamTla: string) {
-  checkIfTeamExist(teamTla);
   const teamCrestUrl = getTeamData(teamTla).crestUrl;
   if (teamCrestUrl) deleteTeamCrest(teamCrestUrl);
   deleteTeamData(teamTla);
   deleteTeamInList(teamTla);
-}
-
-function checkIfTeamExist(teamTla: string) {
-  const listedTeams = getListedTeams();
-  if (listedTeams.every((listedTeam) => listedTeam.tla != teamTla)) {
-    throw ReferenceError("Team not found");
-  } else {
-    checkIfTeamFileExist(teamTla);
-  }
 }
 
 function addTeamToList(team: IListedTeam) {

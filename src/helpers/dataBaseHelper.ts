@@ -28,7 +28,12 @@ export function getTeamData(teamTla: string): ITeam {
 
 export function updateTeamData(teamTla: string, teamData: ITeam) {
   const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
-  fs.writeFileSync(teamFilePath, JSON.stringify(teamData));
+  checkIfTeamFileExist(teamTla);
+  try {
+    fs.writeFileSync(teamFilePath, JSON.stringify(teamData));
+  } catch (err) {
+    throw Error();
+  }
 }
 export function deleteTeamData(teamTLA: string) {
   const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTLA}.json`;
@@ -43,7 +48,7 @@ export function checkIfTeamFileExist(teamTla: string) {
   const filePath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
   try {
     fs.statSync(filePath).isFile();
-  } catch (e) {
+  } catch (err) {
     throw ReferenceError("Team not found");
   }
 }
@@ -51,7 +56,7 @@ export function checkIfTeamFileExist(teamTla: string) {
 function deleteFile(filePath: string) {
   try {
     fs.statSync(filePath);
-  } catch (e) {
+  } catch (err) {
     return;
   }
   fs.unlinkSync(filePath);
