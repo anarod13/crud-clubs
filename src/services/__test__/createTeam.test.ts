@@ -23,7 +23,7 @@ beforeAll(() => {
   vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
-it("Creates a new team", () => {
+it("Should create a new team", () => {
   const newTeam = createTeam(mockNewTeamData);
   expect(newTeam).toEqual(mockNewTeamCreated);
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);
@@ -45,7 +45,7 @@ it("Creates a new team", () => {
   );
 });
 
-it("Throw's type error when team data is incomplete", () => {
+it("Should throw a type error when team data is incomplete", () => {
   expect(() => {
     createTeam(mockWrongTeamData as any);
   }).toThrow(TypeError("Wrong team data"));

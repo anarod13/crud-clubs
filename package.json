@@ -3,7 +3,8 @@
     "dev:threads": "nodemon threads.js",
     "dev": "nodemon src/app.ts",
     "dev:express": "nodemon ./express/index-${npm_config_paso}.js",
-    "test": "vitest src"
+    "test": "vitest src",
+    "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -12,6 +13,7 @@
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/jest": "^28.1.6",
+    "@vitest/coverage-c8": "^0.25.2",
     "babel": "^6.23.0",
     "babel-jest": "^29.1.2",
     "eslint": "^8.20.0",

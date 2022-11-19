@@ -51,7 +51,7 @@ beforeAll(() => {
   mockFS.writeFileSync.mockReturnValue();
   vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
-it("Update team crest", () => {
+it("Should update team's crest", () => {
   const updatedTeamCrest = updateTeamCrest(mockTeamTla, mockTeamCrestFileName);
   expect(updatedTeamCrest).toEqual(`team-crests/${mockTeamCrestFileName}`);
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);

@@ -11,7 +11,7 @@ beforeAll(() => {
   mockFS.writeFileSync.mockClear();
   mockFS.writeFileSync.mockReturnValue();
 });
-it("Creates new team", () => {
+it("Should create a new team", () => {
   createNewTeam(mockTeamTla, mockTeam);
   expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
   expect(fs.writeFileSync).toHaveBeenCalledWith(

@@ -12,7 +12,7 @@ beforeAll(() => {
     Buffer.from(JSON.stringify(mockListedTeamData))
   );
 });
-it("Gets listed teams", () => {
+it("Should get a list of teams", () => {
   const teamData = getListedTeams();
   expect(fs.readFileSync).toHaveBeenCalledTimes(1);
   expect(fs.readFileSync).toHaveBeenCalledWith("./src/data/teams.json");

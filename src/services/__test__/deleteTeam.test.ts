@@ -51,7 +51,7 @@ beforeAll(() => {
   vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
-it("Deletes team", () => {
+it("Should delete a team", () => {
   deleteTeam("EVE");
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);
   expect(fs.readFileSync).toHaveBeenNthCalledWith(

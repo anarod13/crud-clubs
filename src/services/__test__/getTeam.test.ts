@@ -14,12 +14,12 @@ beforeAll(() => {
     Buffer.from(JSON.stringify(mockTeamData))
   );
 });
-it("Returns team data", () => {
+it("Should return team's data", () => {
   const teamDataResult = getTeam("MUN");
   expect(teamDataResult).toEqual(mockTeamData);
 });
 
-it("Throws error if team doesn't exist", () => {
+it("Should throw a reference error if team doesn't exist", () => {
   expect(() => {
     getTeam("ASL");
   }).toThrow(ReferenceError("Team not found"));

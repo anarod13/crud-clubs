@@ -41,13 +41,13 @@ beforeAll(() => {
   mockFS.statSync.mockReturnValueOnce(fileStats);
 });
 
-it("Throws error if file is not found", () => {
+it("Should throw a reference error if file is not found", () => {
   expect(() => {
     updateTeamData(mockTeamTla, mockTeam);
   }).toThrow(ReferenceError("Team not found"));
 });
 
-it("Updates team data", () => {
+it("Should update team data", () => {
   updateTeamData(mockTeamTla, mockTeam);
   expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
   expect(fs.writeFileSync).toHaveBeenCalledWith(

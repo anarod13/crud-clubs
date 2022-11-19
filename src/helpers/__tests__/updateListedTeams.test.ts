@@ -10,7 +10,7 @@ beforeAll(() => {
   mockFS.writeFileSync.mockClear();
   mockFS.writeFileSync.mockReturnValue();
 });
-it("Updates listed teams", () => {
+it("Should update listed teams", () => {
   updateListedTeams(mockListedTeamData);
   expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
   expect(fs.writeFileSync).toHaveBeenCalledWith(

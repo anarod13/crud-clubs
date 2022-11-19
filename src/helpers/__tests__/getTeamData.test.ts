@@ -11,7 +11,7 @@ beforeAll(() => {
   mockFS.readFileSync.mockClear();
   mockFS.readFileSync.mockReturnValue(Buffer.from(JSON.stringify(mockTeam)));
 });
-it("Gets team data", () => {
+it("Should get team data", () => {
   const teamData = getTeamData(mockTeamTla);
   expect(fs.readFileSync).toHaveBeenCalledTimes(1);
   expect(fs.readFileSync).toHaveBeenCalledWith(

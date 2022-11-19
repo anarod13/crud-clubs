@@ -10,7 +10,7 @@ beforeAll(() => {
   mockFS.unlinkSync.mockClear();
   mockFS.unlinkSync.mockReturnValue();
 });
-it("Deletes a team crest", () => {
+it("Should delete team's crest", () => {
   deleteTeamCrest(mockTeamCrestUrl);
   expect(fs.unlinkSync).toHaveBeenCalledTimes(1);
   expect(fs.unlinkSync).toHaveBeenCalledWith(

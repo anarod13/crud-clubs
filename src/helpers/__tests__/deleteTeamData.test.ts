@@ -10,7 +10,7 @@ beforeAll(() => {
   mockFS.unlinkSync.mockClear();
   mockFS.unlinkSync.mockReturnValue();
 });
-it("Deletes team data", () => {
+it("Should delete team data", () => {
   deleteTeamData(mockTeamTla);
   expect(fs.unlinkSync).toHaveBeenCalledTimes(1);
   expect(fs.unlinkSync).toHaveBeenCalledWith(

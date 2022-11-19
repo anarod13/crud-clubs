@@ -49,7 +49,7 @@ beforeAll(() => {
   vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
-it("Update team details", () => {
+it("Should update team details", () => {
   const updatedTeam = updateTeam(mockUpdatedTeamData.tla, mockUpdatedTeamData);
   expect(updatedTeam).toEqual(mockUpdatedTeamData);
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);
@@ -68,7 +68,7 @@ it("Update team details", () => {
   );
 });
 
-it("Throw's type error when team data is incomplete", () => {
+it("Should theow a type error when team data is incomplete", () => {
   expect(() => {
     updateTeam(mockWrongTeamData.tla, mockWrongTeamData as any);
   }).toThrow(TypeError("Wrong team data"));
