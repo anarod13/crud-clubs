@@ -3,6 +3,8 @@ import mockNewTeamData from "../../helpers/__tests__/fixtures/mockTeam.json";
 import mockListedTeams from "../../helpers/__tests__/fixtures/mockListedTeamData.json";
 import mockNewTeamCreated from "./fixtures/mockCreatedTeam.json";
 import mockTeamAddedList from "./fixtures/mockTeamAddedList.json";
+import mockWrongTeamData from "./fixtures/mockWrongTeamData.json";
+
 import fs from "fs";
 import { createTeam } from "../crudClub";
 
@@ -41,4 +43,10 @@ it("Creates a new team", () => {
     "./src/data/teams.json",
     JSON.stringify(mockTeamAddedList)
   );
+});
+
+it("Throw's type error when team data is incomplete", () => {
+  expect(() => {
+    createTeam(mockWrongTeamData as any);
+  }).toThrow(TypeError("Wrong team data"));
 });

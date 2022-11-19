@@ -2,6 +2,7 @@ import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import mockUpdatedTeamData from "./fixtures/mockUpdatedTeam.json";
 import mockListedTeamData from "../../helpers/__tests__/fixtures/mockListedTeamData.json";
 import mockUpdatedListedTeamData from "./fixtures/mockUpdatedListedTeamData.json";
+import mockWrongTeamData from "./fixtures/mockWrongTeamData.json";
 import fs from "fs";
 import { updateTeam } from "../crudClub";
 
@@ -65,4 +66,10 @@ it("Update team details", () => {
     "./src/data/teams.json",
     JSON.stringify(mockUpdatedListedTeamData)
   );
+});
+
+it("Throw's type error when team data is incomplete", () => {
+  expect(() => {
+    updateTeam(mockWrongTeamData.tla, mockWrongTeamData as any);
+  }).toThrow(TypeError("Wrong team data"));
 });
