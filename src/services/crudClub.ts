@@ -5,7 +5,7 @@ import {
   updateTeamData,
   deleteTeamData,
   deleteTeamCrest,
-  checkIfTeamFileExist,
+  createNewTeam,
 } from "../helpers/dataBaseHelper";
 import ITeam from "../entities/ITeam";
 import IListedTeam from "../entities/IListedTeam";
@@ -44,10 +44,11 @@ export function updateTeamCrest(teamTla: string, crestFileName: string) {
 
 export function createTeam(newTeam: ITeam): ITeam {
   if (checkTeamData(newTeam)) {
-    newTeam.id = getListedTeams().length;
+    const listedTeams = getListedTeams();
+    newTeam.id = listedTeams.length;
     newTeam.lastUpdated = new Date().toISOString();
-    updateTeamData(newTeam.tla, newTeam);
-    addTeamToList(mapListedTeam(newTeam));
+    createNewTeam(newTeam.tla, newTeam);
+    addTeamToList(mapListedTeam(newTeam), listedTeams);
     return getTeamData(newTeam.tla);
   } else {
     throw SyntaxError("Wrong team data");
@@ -61,8 +62,7 @@ export function deleteTeam(teamTla: string) {
   deleteTeamInList(teamTla);
 }
 
-function addTeamToList(team: IListedTeam) {
-  const listedTeams = getListedTeams();
+function addTeamToList(team: IListedTeam, listedTeams: IListedTeam[]) {
   listedTeams.push(team);
   updateListedTeams(listedTeams);
 }
@@ -108,7 +108,7 @@ function checkTeamData(data: any): data is ITeam {
     "email" in data &&
     typeof data["email"] === ("string" || null) &&
     "founded" in data &&
-    typeof data["founded"] === ("string" || null) &&
+    typeof data["founded"] === ("number" || null) &&
     "clubColors" in data &&
     typeof data["clubColors"] === ("string" || null) &&
     "venue" in data &&

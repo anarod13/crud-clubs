@@ -21,7 +21,7 @@ export function getTeamData(teamTla: string): ITeam {
     const teamData = fs.readFileSync(teamFilePath);
     return JSON.parse(teamData.toString());
   } catch (err) {
-    throw ReferenceError("No team found");
+    throw ReferenceError("Team not found");
   }
 }
 
@@ -34,6 +34,12 @@ export function updateTeamData(teamTla: string, teamData: ITeam) {
     throw Error();
   }
 }
+
+export function createNewTeam(teamTla: string, teamData: ITeam) {
+  const newTeamPath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
+  fs.writeFileSync(newTeamPath, JSON.stringify(teamData));
+}
+
 export function deleteTeamData(teamTLA: string) {
   const teamFilePath = `${TEAMS_DETAILS_PATH}${teamTLA}.json`;
   deleteFile(teamFilePath);
