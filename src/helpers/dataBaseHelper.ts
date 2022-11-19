@@ -49,7 +49,7 @@ export function deleteTeamCrest(teamCrestUrl: string) {
   deleteFile(teamCrestPath);
 }
 
-export function checkIfTeamFileExist(teamTla: string) {
+function checkIfTeamFileExist(teamTla: string) {
   const filePath = `${TEAMS_DETAILS_PATH}${teamTla}.json`;
   try {
     fs.statSync(filePath).isFile();
