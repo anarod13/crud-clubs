@@ -1,15 +1,10 @@
-import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
+import mockListedTeamData from "../../helpers/__tests__/fixtures/mockListedTeamData.json";
 import fs from "fs";
 import { getTeamsList } from "../crudClub";
 
-jest.mock("fs");
-const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
-const teamsListResult = [
-  { id: 57, name: "Arsenal FC", country: "England" },
-  { id: 58, name: "Aston Villa FC", country: "England" },
-  { id: 61, name: "Chelsea FC", country: "England" },
-  { id: 62, name: "Everton FC", country: "England" },
-];
+vi.mock("fs");
+const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
 
 beforeAll(() => {
   mockFS.readFileSync.mockClear();

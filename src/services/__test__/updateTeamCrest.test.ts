@@ -1,10 +1,11 @@
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
 import mockTeamEditedData from "./fixtures/mockUpdateCrestData.json";
 import fs from "fs";
 import { updateTeamCrest } from "../crudClub";
 
-jest.mock("fs");
-const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
+vi.mock("fs");
+const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
 const TEAM_ID = 58;
 
 beforeAll(() => {
@@ -14,7 +15,7 @@ beforeAll(() => {
   );
   mockFS.writeFileSync.mockClear();
   mockFS.writeFileSync.mockReturnValue();
-  jest.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
+  vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
 it("Edits team details", () => {

@@ -1,26 +1,11 @@
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
 import mockTeamUpdatedData from "./fixtures/mockTeamData.json";
 import fs from "fs";
 import { updateTeam } from "../crudClub";
 
-jest.mock("fs");
-const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
-const teamData = {
-  id: 58,
-  area: { id: 2072, name: "England" },
-  name: "Aston Villa FC",
-  shortName: "Aston Villa",
-  tla: "AST",
-  crestUrl: "./",
-  address: "Villa Park Birmingham B6 6HE",
-  phone: "+44 (0121) 3272299",
-  website: "http://www.avfc.co.uk",
-  email: "foundation@avfc.co.uk",
-  founded: 1872,
-  clubColors: "Claret / Sky Blue",
-  venue: "Villa Park",
-  lastUpdated: "",
-};
+vi.mock("fs");
+const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
 
 beforeAll(() => {
   mockFS.readFileSync.mockClear();
@@ -29,7 +14,7 @@ beforeAll(() => {
   );
   mockFS.writeFileSync.mockClear();
   mockFS.writeFileSync.mockReturnValue();
-  jest.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
+  vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
 it("Edits team details", () => {

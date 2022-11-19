@@ -1,4 +1,5 @@
-import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
+import mockTeamData from "../../helpers/__tests__/fixtures/mockTeam.json";
 import fs from "fs";
 import { getTeam } from "../crudClub";
 

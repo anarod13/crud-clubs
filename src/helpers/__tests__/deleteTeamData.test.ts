@@ -1,8 +1,9 @@
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import fs from "fs";
 import { deleteTeamData } from "../dataBaseHelper";
 
-jest.mock("fs");
-const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
+vi.mock("fs");
+const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
 const mockTeamTla = "mockTeam1";
 
 beforeAll(() => {
@@ -16,4 +17,3 @@ it("Deletes team data", () => {
     `./src/data/teams/${mockTeamTla}.json`
   );
 });
-// https://medium.com/nerd-for-tech/testing-in-node-js-easy-way-to-mock-filesystem-883b9f822ea4

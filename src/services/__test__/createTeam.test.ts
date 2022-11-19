@@ -1,26 +1,10 @@
-import mockTeamData from "../../helpers/__tests__/fixtures/mockTeamData.json";
-import mockCreateTeamData from "./fixtures/mockCreateTeamData.json";
+import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import fs from "fs";
 import { createTeam } from "../crudClub";
 
-jest.mock("fs");
-const mockFS: jest.Mocked<typeof fs> = <jest.Mocked<typeof fs>>fs;
-const newTeam = {
-  id: 5,
-  area: { id: 2072, name: "England" },
-  name: "Nottingham Forest FC",
-  shortName: "NTF",
-  tla: null,
-  crestUrl: null,
-  address: null,
-  phone: null,
-  website: null,
-  email: null,
-  founded: null,
-  clubColors: null,
-  venue: "The City Ground",
-  lastUpdated: "",
-};
+vi.mock("fs");
+const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
+// const writeFile = jest.spyOn(fs, "writeFileSync");
 
 beforeAll(() => {
   mockFS.readFileSync.mockClear();
