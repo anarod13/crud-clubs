@@ -99,7 +99,7 @@ app.post(
 
 app.use((error, req, res, next) => {
   if (error.name == "ReferenceError") res.status(404).send(error.message);
-  else if (error.name == "SyntaxError") res.status(400).send(error.message);
+  else if (error.name == "TypeError") res.status(400).send(error.message);
   else res.status(500).send("Something blew up, please try again");
 });
 

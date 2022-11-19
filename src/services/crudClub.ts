@@ -28,7 +28,7 @@ export function updateTeam(teamTla: string, newTeamData: ITeam): ITeam {
     updateTeamInList(mapListedTeam(newTeamData));
     return getTeamData(teamTla);
   } else {
-    throw new SyntaxError("Wrong team data");
+    throw new TypeError("Wrong team data");
   }
 }
 
@@ -51,7 +51,7 @@ export function createTeam(newTeam: ITeam): ITeam {
     addTeamToList(mapListedTeam(newTeam), listedTeams);
     return getTeamData(newTeam.tla);
   } else {
-    throw SyntaxError("Wrong team data");
+    throw TypeError("Wrong team data");
   }
 }
 
