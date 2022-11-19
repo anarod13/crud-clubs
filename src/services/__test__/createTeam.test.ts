@@ -1,28 +1,44 @@
 import { vi, Mocked, beforeAll, it, expect } from "vitest";
+import mockNewTeamData from "../../helpers/__tests__/fixtures/mockTeam.json";
+import mockListedTeams from "../../helpers/__tests__/fixtures/mockListedTeamData.json";
+import mockNewTeamCreated from "./fixtures/mockCreatedTeam.json";
+import mockTeamAddedList from "./fixtures/mockTeamAddedList.json";
 import fs from "fs";
 import { createTeam } from "../crudClub";
 
 vi.mock("fs");
 const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
-// const writeFile = jest.spyOn(fs, "writeFileSync");
 
 beforeAll(() => {
   mockFS.readFileSync.mockClear();
-  mockFS.readFileSync.mockReturnValue(
-    Buffer.from(JSON.stringify(mockTeamData))
+  mockFS.readFileSync.mockReturnValueOnce(
+    Buffer.from(JSON.stringify(mockListedTeams))
+  );
+  mockFS.readFileSync.mockReturnValueOnce(
+    Buffer.from(JSON.stringify(mockNewTeamCreated))
   );
   mockFS.writeFileSync.mockClear();
-  mockFS.writeFileSync.mockReturnValue();
-  jest.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
+  vi.useFakeTimers().setSystemTime(new Date("2022-10-10T17:17:21.576Z"));
 });
 
-it("Edits team details", () => {
-  createTeam(newTeam);
+it("Creates a new team", () => {
+  const newTeam = createTeam(mockNewTeamData);
+  expect(newTeam).toEqual(mockNewTeamCreated);
   expect(fs.readFileSync).toHaveBeenCalledTimes(2);
-  expect(fs.readFileSync).toHaveBeenCalledWith("src/data/teams.json");
-  expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
-  expect(fs.writeFileSync).toHaveBeenCalledWith(
-    "src/data/teams.json",
-    JSON.stringify(mockCreateTeamData)
+  expect(fs.readFileSync).toHaveBeenNthCalledWith(1, "./src/data/teams.json");
+  expect(fs.readFileSync).toHaveBeenNthCalledWith(
+    2,
+    "./src/data/teams/MUN.json"
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledTimes(2);
+  expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+    1,
+    "./src/data/teams/MUN.json",
+    JSON.stringify(mockNewTeamCreated)
+  );
+  expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+    2,
+    "./src/data/teams.json",
+    JSON.stringify(mockTeamAddedList)
   );
 });

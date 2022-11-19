@@ -21,7 +21,7 @@
     "name": "Aston Villa FC",
     "shortName": "Aston Villa",
     "tla": "AST",
-    "crestUrl": "team-crests/58-crest.jpg",
+    "crestUrl": "./",
     "address": "Villa Park Birmingham B6 6HE",
     "phone": "+44 (0121) 3272299",
     "website": "http://www.avfc.co.uk",
@@ -29,7 +29,7 @@
     "founded": 1872,
     "clubColors": "Claret / Sky Blue",
     "venue": "Villa Park",
-    "lastUpdated": "2022-10-10T17:17:21.576Z"
+    "lastUpdated": "2020-05-14T02:41:36Z"
   },
   {
     "id": 61,
@@ -53,7 +53,7 @@
     "name": "Everton FC",
     "shortName": "Everton",
     "tla": "EVE",
-    "crestUrl": "https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg",
+    "crestUrl": "team-crests/EVE-crest.png",
     "address": "Goodison Park Liverpool L4 4EL",
     "phone": "+44 (0871) 6631878",
     "website": "http://www.evertonfc.com",
@@ -61,6 +61,6 @@
     "founded": 1878,
     "clubColors": "Blue / White",
     "venue": "Goodison Park",
-    "lastUpdated": "2020-05-14T02:41:42Z"
+    "lastUpdated": "2022-10-10T17:17:21.576Z"
   }
 ]
