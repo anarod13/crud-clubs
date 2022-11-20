@@ -1,5 +1,5 @@
-import IListedTeam from "../entities/IListedTeam";
-import ITeam from "../entities/ITeam";
+import IListedTeam from "../entities/IListedTeam.js";
+import ITeam from "../entities/ITeam.js";
 
 export default function mapListedTeam(teamData: ITeam): IListedTeam {
   const {

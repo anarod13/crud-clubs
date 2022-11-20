@@ -8,7 +8,7 @@ import {
   updateTeamCrest,
   deleteTeam,
   updateTeam,
-} from "./services/crudClub";
+} from "./services/crudClub.js";
 
 const app = express();
 const port = process.env.PORT || 8080;

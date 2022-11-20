@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import IListedTeam from "../entities/IListedTeam";
-import ITeam from "../entities/ITeam";
+import IListedTeam from "../entities/IListedTeam.js";
+import ITeam from "../entities/ITeam.js";
 
 const LISTED_TEAMS_PATH = "./src/data/teams.json";
 const TEAMS_DETAILS_PATH = "./src/data/teams/";

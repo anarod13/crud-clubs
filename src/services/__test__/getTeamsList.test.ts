@@ -1,7 +1,7 @@
 import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import mockListedTeamData from "../../helpers/__tests__/fixtures/mockListedTeamData.json";
 import fs from "fs";
-import { getTeamsList } from "../crudClub";
+import { getTeamsList } from "../crudClub.js";
 
 vi.mock("fs");
 const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;

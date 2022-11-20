@@ -1,6 +1,6 @@
-import IActiveCompetition from "./IActiveCompetition";
-import type ITeamArea from "./ITeamArea";
-import ITeamMember from "./ITeamMember";
+import IActiveCompetition from "./IActiveCompetition.js";
+import type ITeamArea from "./ITeamArea.js";
+import ITeamMember from "./ITeamMember.js";
 
 export default interface ITeam {
   id: number;

@@ -1,6 +1,6 @@
 import { vi, Mocked, beforeAll, it, expect } from "vitest";
 import fs from "fs";
-import { deleteTeamCrest } from "../dataBaseHelper";
+import { deleteTeamCrest } from "../dataBaseHelper.js";
 
 vi.mock("fs");
 const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;

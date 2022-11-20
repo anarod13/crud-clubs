@@ -6,10 +6,10 @@ import {
   deleteTeamData,
   deleteTeamCrest,
   createNewTeam,
-} from "../helpers/dataBaseHelper";
-import ITeam from "../entities/ITeam";
-import IListedTeam from "../entities/IListedTeam";
-import mapListedTeam from "../mappers/teamListedMapper";
+} from "../helpers/dataBaseHelper.js";
+import ITeam from "../entities/ITeam.js";
+import IListedTeam from "../entities/IListedTeam.js";
+import mapListedTeam from "../mappers/teamListedMapper.js";
 
 const CREST_STORAGE = "team-crests";
 

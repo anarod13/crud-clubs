@@ -4,7 +4,7 @@ import mockListedTeamData from "../../helpers/__tests__/fixtures/mockListedTeamD
 import mockUpdatedListedTeamData from "./fixtures/mockUpdatedListedTeamData.json";
 import mockWrongTeamData from "./fixtures/mockWrongTeamData.json";
 import fs from "fs";
-import { updateTeam } from "../crudClub";
+import { updateTeam } from "../crudClub.js";
 
 vi.mock("fs");
 const mockFS: Mocked<typeof fs> = <Mocked<typeof fs>>fs;
