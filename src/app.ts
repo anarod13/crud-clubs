@@ -11,7 +11,7 @@ import {
 } from "./services/crudClub";
 
 const app = express();
-const puerto = 8080;
+const port = process.env.PORT || 8080;
 
 const options: cors.CorsOptions = {
   origin: "*",
@@ -103,4 +103,4 @@ app.use((error, req, res, next) => {
   else res.status(500).send("Something blew up, please try again");
 });
 
-app.listen(puerto);
+app.listen(port);
