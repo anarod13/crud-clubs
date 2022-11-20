@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "target": "es6",
+    "module": "NodeNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "outDir": "build",
     "rootDir": "./src",
-    "moduleResolution": "node",
-    "types": ["jest", "@types/jest"]
+    "moduleResolution": "nodenext",
+    "types": []
   }
 }
