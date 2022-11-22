@@ -34,7 +34,9 @@ export function updateTeam(teamTla: string, newTeamData: ITeam): ITeam {
 
 export function updateTeamCrest(teamTla: string, crestFileName: string) {
   const teamData = getTeamData(teamTla);
-  deleteTeamCrest(teamData.crestUrl);
+  if (teamData.crestUrl) {
+    deleteTeamCrest(teamData.crestUrl);
+  }
   teamData.crestUrl = `${CREST_STORAGE}/${crestFileName}`;
   teamData.lastUpdated = new Date().toISOString();
   updateTeamData(teamTla, teamData);
