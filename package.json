@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tsc",
     "dev:threads": "nodemon threads.js",
-    "dev": "nodemon build/app.js",
+    "dev": "nodemon dist/app.js",
     "test": "vitest src",
     "coverage": "vitest run --coverage"
   },
